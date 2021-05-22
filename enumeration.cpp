@@ -5,7 +5,7 @@ int main(){
     enum class Option{Rice,Biriyani};
     Option value = Option::Biriyani;
     printf("%d",value);
- //Unscoped Enumeration 
+ //Unscoped Enumeration Code
     enum  Gender{Male,Female};
     Gender category = Male;
 
