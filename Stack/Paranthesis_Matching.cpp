@@ -5,14 +5,14 @@ using namespace std;
 
 struct Node
 {
-    int data;
+    char data;
    struct  Node *next;
 };
 
 struct Node *top=NULL;
 
 
-void push(int element)
+void push(char element)
 {
     
     if(top==NULL)
@@ -58,20 +58,43 @@ void Display()
         cout<<p->data<<endl;
         p=p->next;
     };
-}
+    }
     
+int isBalanced(char *exp)
+{
+    int i=0;
+    for(i=0;exp[i]!='\0';i++)
+    {
+        if(exp[i]=='(')
+        {
+            push('(');
+        }
+        else if(exp[i]==')')
+        {
+            if(top==NULL)
+            return  0;
+            
+            pop();
+        }
 
+    }
+    if(top==NULL)
+    {
+        cout<<"Balanced";
+        return 1; 
+    }
+
+    else
+    {   cout<<"UnBalanced";
+        return 0;
+    }
+}
 
 
 int main()
 {
-    push(6);
-    push(7);
-    push(8);
-    push(9);
-    push(10);
-    pop();
-    Display();
+    char *exp="(((a+b)*(b+c))";
+    isBalanced(exp);
 
 
 }
