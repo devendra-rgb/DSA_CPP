@@ -10,6 +10,7 @@ class Tree
     Node *root;
     Que que;
     Tree(){root=NULL;};
+    
     void create_tree();
     void preOrder(Node *p);
     void postOrder(Node *p);
@@ -17,6 +18,10 @@ class Tree
     void levelOrder(Node *p);
     int Height(Node *root);
     int Count(Node *root);
+    int LeafNodes(Node *p);
+    int Degree2(Node *p);
+    int Degree1(Node *p);
+    int Degree1Or2(Node *p);
 };
 
 
@@ -155,6 +160,109 @@ int Tree:: Count(Node *root)
     }
     return 0;
 }
+
+//counting Leaf Nodes
+
+int Tree::LeafNodes(Node *p)
+{
+    int x=0,y=0;
+    if(p)
+    {
+        x=LeafNodes(p->lchild);
+        y=LeafNodes(p->rchild); 
+        
+        if(p->lchild==NULL && p->rchild==NULL)
+        {
+            return x+y+1;
+        }   
+
+        else
+        {
+        return x+y;
+        }
+    }
+    return 0;
+    
+}
+
+
+int Tree::Degree1Or2(Node *p)
+{
+    int x=0,y=0;
+    if(p)
+    {
+
+        x=Degree1Or2(p->lchild);
+        y=Degree1Or2(p->rchild);
+
+        if(p->lchild!=NULL || p->rchild!=NULL)
+        {
+            return x+y+1;
+        }
+        else
+        {
+            return x+y;
+        }
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+
+int Tree::Degree2(Node *p)
+{
+    int x=0,y=0;
+    if(p)
+    {
+
+        x=Degree2(p->lchild);
+        y=Degree2(p->rchild);
+
+        if(p->lchild!=NULL && p->rchild!=NULL)
+        {
+            return x+y+1;
+        }
+        else
+        {
+            return x+y;
+        }
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+
+int Tree::Degree1(Node *p)
+{
+    int x=0,y=0;
+    if(p)
+    {
+
+        x=Degree1(p->lchild);
+        y=Degree1(p->rchild);
+
+        if(p->lchild!=NULL ^ p->rchild!=NULL)
+        {
+            return x+y+1;
+        }
+
+        else
+        {
+            return x+y;
+        }
+    }
+    return 0;
+    
+}
+
+
+
+
+
 int main()
 {
 
@@ -179,7 +287,18 @@ BinaryTree.levelOrder(BinaryTree.root);
 cout<<endl;
 
 
-cout<<"Count of Binary Tree  "<<BinaryTree.Count(BinaryTree.root);
-cout<<endl;
-cout<<"Height of Binary Tree  "<<BinaryTree.Height(BinaryTree.root);
+cout<<"Count of Binary Tree  "<<BinaryTree.Count(BinaryTree.root)<<endl;
+
+cout<<"Height of Binary Tree  "<<BinaryTree.Height(BinaryTree.root)<<endl;
+
+cout<<"Degree1 of Binary Tree "<<BinaryTree.Degree1(BinaryTree.root)<<endl;
+
+cout<<"Degree2 of Binary Tree "<<BinaryTree.Degree2(BinaryTree.root)<<endl;
+
+cout<<"Degree1Or2 of Binary Tree "<<BinaryTree.Degree1Or2(BinaryTree.root)<<endl;
+
+cout<<"Leaf Nodes of Binary Tree "<<BinaryTree.LeafNodes(BinaryTree.root)<<endl;
+
+
+
 }
