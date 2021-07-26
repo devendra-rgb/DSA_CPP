@@ -155,38 +155,32 @@ struct Node * InSuccessor(struct Node *p)
 
 struct Node * Delete(struct Node *p,int key)
 {
-    
-    struct Node *q;
+
     if(p==NULL)
     return NULL;
-
-    if(p->lchild==NULL && p->rchild==NULL)
+    if(p->lchild == NULL && p->rchild == NULL)
     {
         if(p==root)
-            root=NULL;
         free(p);
         return NULL;
     }
 
+    struct Node *q;
     if(key>p->data)
-    {
-        p->rchild=Delete(p->rchild,key);
-    }
+    Delete(p->rchild,key); //taking the pointer to the exact Node to delete it
+    else if(key<p->data)
+    Delete(p->lchild,key);
 
-    if(key<p->data)
-    {
-        p->lchild=Delete(p->lchild,key);
-    }
 
     else
     {
-        if(Height(p->lchild)>Height(p->rchild))
+        if(Height(p->lchild)<Height(p->rchild)) //comparing the heights to select the 
+                                                // Inorder precessoder and successor
         {
             q=InPre(p->lchild);
             p->data=q->data;
             p->lchild=Delete(p->lchild,q->data);
         }
-
         else
         {
             q=InSuccessor(p->rchild);
@@ -205,17 +199,15 @@ void createPre(int A[],int n)
 int main()
 {
     struct Node *ad=NULL,*p;
-    Insert(8);
-    Insert(3);
+    Insert(50);
     Insert(10);
-    Insert(1);
-    Insert(6);
-    Insert(14);
-    Insert(4);
-    Insert(7);
+    Insert(40);
+    Insert(20);
+    Insert(30);
     
-    Delete(root,6);
-    ad=Rsearch(root,6);
+    
+    Delete(root,50);
+    ad=Rsearch(root,50);
 
     if(ad!=NULL)
     {
