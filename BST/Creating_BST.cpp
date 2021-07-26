@@ -155,26 +155,28 @@ struct Node * InSuccessor(struct Node *p)
 
 struct Node * Delete(struct Node *p,int key)
 {
+    struct Node *q;
 
     if(p==NULL)
     return NULL;
     if(p->lchild == NULL && p->rchild == NULL)
     {
         if(p==root)
+            root=NULL;
         free(p);
         return NULL;
     }
 
-    struct Node *q;
+    //struct Node *q;
     if(key>p->data)
-    Delete(p->rchild,key); //taking the pointer to the exact Node to delete it
+        p->rchild=Delete(p->rchild,key); //taking the pointer to the exact Node to delete it
     else if(key<p->data)
-    Delete(p->lchild,key);
+        p->lchild=Delete(p->lchild,key);
 
 
     else
     {
-        if(Height(p->lchild)<Height(p->rchild)) //comparing the heights to select the 
+        if(Height(p->lchild)>Height(p->rchild)) //comparing the heights to select the 
                                                 // Inorder precessoder and successor
         {
             q=InPre(p->lchild);
