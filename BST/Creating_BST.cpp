@@ -203,9 +203,7 @@ int main()
     Insert(10);
     Insert(40);
     Insert(20);
-    Insert(30);
-    
-    
+    Insert(30); 
     Delete(root,50);
     ad=Rsearch(root,50);
 
