@@ -155,6 +155,64 @@ struct Node * RInsert(struct Node *p,int key)
     return p;
 }
 
+
+
+
+struct Node * Delete(struct Node *p,int key)
+{
+    struct Node *q;
+
+    if(p==NULL)
+    return NULL;
+    if(p->lchild == NULL && p->rchild == NULL)
+    {
+        if(p==root)
+            root=NULL;
+        free(p);
+        return NULL;
+    }
+
+    //struct Node *q;
+    if(key>p->data)
+        p->rchild=Delete(p->rchild,key); //taking the pointer to the exact Node to delete it
+    else if(key<p->data)
+        p->lchild=Delete(p->lchild,key);
+
+
+    else
+    {
+        if(Height(p->lchild)>Height(p->rchild)) //comparing the heights to select the 
+                                                // Inorder precessoder and successor
+        {
+            q=InPre(p->lchild);
+            p->data=q->data;
+            p->lchild=Delete(p->lchild,q->data);
+        }
+        else
+        {
+            q=InSuccessor(p->rchild);
+            p->data=q->data;
+            p->rchild=Delete(p->rchild,q->data);
+        }
+
+    }
+    p->height=Nodeheight(p);
+
+    if(BalanceFactor(p)==2 && BalanceFactor(p->lchild)==1)
+        return LLRotation(p);
+
+    else if(BalanceFactor(p)==-2 && BalanceFactor(p->rchild)==-1)
+        return RRRotation(p);
+
+    else if(BalanceFactor(p)==2 && BalanceFactor(p->lchild)==-1)
+        return LRRotation(p);
+    
+    else if(BalanceFactor(p)==-2 && BalanceFactor(p->rchild)==1)
+        return RLRotation(p);
+        
+    return p;
+}
+
 int main()
 {
     struct Node *i;
